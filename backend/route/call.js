@@ -10,6 +10,7 @@ const router = express.Router();
 
 const phone_number=process.env.PHONE_NUMBER_ID
 const assistant_id=process.env.ASSISTANT_ID
+console.log(phone_number,assistant_id)
 router.post("/call", async (req, res) => {
   const {
     phoneNumberId = phone_number,
@@ -26,7 +27,7 @@ router.post("/call", async (req, res) => {
 
   try {
     const call = await vapi.calls.create({
-      assistantId, // Note: assistantId is now top-level
+      assistantId, 
       phoneNumberId,
       customer: { number: customerNumber },
     });
