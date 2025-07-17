@@ -1,0 +1,108 @@
+{
+  "id": "276b5ef3-0f62-499d-bc2a-5afe1075da91",
+  "orgId": "5667d2e0-5fd6-4e35-861b-6a65862bb29e",
+  "name": "insurance",
+  "voice": {
+    "model": "eleven_flash_v2",
+    "speed": 0.9,
+    "style": 0.2,
+    "voiceId": "21m00Tcm4TlvDq8ikWAM",
+    "autoMode": true,
+    "provider": "11labs",
+    "stability": 0.5,
+    "similarityBoost": 0.75,
+    "useSpeakerBoost": true,
+    "optimizeStreamingLatency": 4,
+    "inputPunctuationBoundaries": [
+      "。"
+    ]
+  },
+  "createdAt": "2025-07-02T04:35:11.591Z",
+  "updatedAt": "2025-07-09T11:30:47.215Z",
+  "model": {
+    "model": "meta-llama/llama-4-maverick-17b-128e-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "[Identity]\nYou are Veena, a professional female insurance agent at ValuEnable Life Insurance. You handle policy renewals, premium payments, and customer queries with empathy and efficiency.\n\n[Communication Style]\n- Maximum 35 words per response\n- Use simple, conversational English\n- Switch to Hindi/Marathi/Gujarati if requested\n- Avoid jargon and technical terms\n- Show genuine concern and patience\n\n[Core Tasks]\n1. Greet and verify customer identity\n2. Confirm policy details\n3. Address concerns empathetically\n4. Guide toward payment/resolution\n5. End with helpful next step or question\n\n[Conversation Flow]\n- Start: \"Hi, I'm Veena from ValuEnable. How can I help you today?\"\n- Always confirm understanding before proceeding\n- Handle objections with empathy, not sales pressure\n- Offer payment assistance if needed\n\nExample:\nInstead of: \"I understand you're concerned about your policy renewal timeline...\"\nUse: \"Yes, I can help. Your policy renews on March 15th. Would you like to pay now?\"\n[Error Handling]\n- If unclear: Ask specific clarifying questions\n- If can't resolve: Offer customer service (1800 209 7272)\n- Always acknowledge limitations honestly"
+      }
+    ],
+    "provider": "groq",
+    "maxTokens": 150,
+    "knowledgeBase": {
+      "fileIds": [
+        "0bc1d93a-46f8-4dca-aa66-f3a431ea9451"
+      ],
+      "provider": "google"
+    }
+  },
+  "firstMessage": "Hello and very Good Morning! May I speak with the policy holder?",
+  "voicemailMessage": "Please call back when you're available.",
+  "endCallFunctionEnabled": true,
+  "endCallMessage": "Goodbye.",
+  "transcriber": {
+    "model": "nova-2",
+    "language": "en",
+    "provider": "deepgram",
+    "confidenceThreshold": 0.3
+  },
+  "silenceTimeoutSeconds": 15,
+  "backgroundSound": "office",
+  "firstMessageMode": "assistant-speaks-first-with-model-generated-message",
+  "analysisPlan": {
+    "summaryPlan": {
+      "messages": [
+        {
+          "content": "Analyze the conversation and provide:\n1. Customer's primary concern\n2. Resolution provided\n3. Next steps committed\n4. Payment status/commitment\n5. Overall conversation sentiment\n6. Areas for improvement",
+          "role": "system"
+        },
+        {
+          "content": "Here is the transcript:\n\n{{transcript}}\n\n. Here is the ended reason of the call:\n\n{{endedReason}}\n\n",
+          "role": "user"
+        }
+      ]
+    },
+    "successEvaluationPlan": {
+      "rubric": "NumericScale",
+      "messages": [
+        {
+          "content": "Rate the conversation success on:\n1. Did agent follow the script flow?\n2. Was customer concern addressed?\n3. Was appropriate solution offered?\n4. Was next step clearly defined?\n5. Was the tone empathetic and professional?\n\nRubric:\n\n{{rubric}}\n\nOnly respond with the evaluation result.",
+          "role": "system"
+        },
+        {
+          "content": "Here is the transcript of the call:\n\n{{transcript}}\n\n. Here is the ended reason of the call:\n\n{{endedReason}}\n\n",
+          "role": "user"
+        },
+        {
+          "content": "Here was the system prompt of the call:\n\n{{systemPrompt}}\n\n",
+          "role": "user"
+        }
+      ]
+    }
+  },
+  "voicemailDetection": {
+    "provider": "vapi",
+    "backoffPlan": {
+      "maxRetries": 6,
+      "startAtSeconds": 5,
+      "frequencySeconds": 5
+    },
+    "beepMaxAwaitSeconds": 0
+  },
+  "messagePlan": {
+    "idleMessages": [
+      "Are you still there?"
+    ]
+  },
+  "startSpeakingPlan": {
+    "waitSeconds": 0.2,
+    "smartEndpointingPlan": {
+      "provider": "vapi"
+    }
+  },
+  "stopSpeakingPlan": {
+    "numWords": 1,
+    "backoffSeconds": 2
+  },
+  "isServerUrlSecretSet": false
+}
